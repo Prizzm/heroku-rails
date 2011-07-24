@@ -162,8 +162,11 @@ module HerokuRails
         existing_addons.each do |existing_addon|
           # check to see if we need to delete this addon
           unless addons.include?(existing_addon)
-            # delete this addon if they arent on the approved list
-            system_with_echo "heroku addons:remove #{existing_addon} --app #{app_name}"
+            # delete this addon if they arent on the approved list 
+            # (if the user confirms)
+            if confirm("are you sure you want to remove #{existing_addon}? (y/n): ")
+              system_with_echo "heroku addons:remove #{existing_addon} --app #{app_name}"
+            end
           end
         end
 
