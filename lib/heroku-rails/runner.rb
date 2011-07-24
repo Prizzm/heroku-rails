@@ -2,6 +2,8 @@ require 'heroku/client'
 
 module HerokuRails
   class Runner
+    include Heroku::Helpers
+    
     def initialize(config)
       @config = config
       @environments = []
@@ -164,9 +166,10 @@ module HerokuRails
           unless addons.include?(existing_addon)
             # delete this addon if they arent on the approved list 
             # (if the user confirms)
-            if confirm("are you sure you want to remove #{existing_addon}? (y/n): ")
-              system_with_echo "heroku addons:remove #{existing_addon} --app #{app_name}"
-            end
+            #puts "are you sure you want to remove #{existing_addon} from #{app_name} (y/N)"
+            #if confirm()
+              #system_with_echo "heroku addons:remove #{existing_addon} --app #{app_name}"
+            #end
           end
         end
 
